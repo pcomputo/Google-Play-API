@@ -94,6 +94,19 @@ def getAppRating(display):
     
     return rating
     
+#Returns reviewers count
+def getAppReviewersCount(display):
+    global package
+    soup = createSoup()
+    
+    reviewers_count = soup.find( 'meta', {'itemprop' : 'ratingCount'} )
+    reviewers = reviewers_count.get( 'content' ).strip()
+    
+    if display:
+        print reviewers
+    
+    return reviewers
+    
 #Returns the What's new   
 def getAppUpdate(display):
     global package
@@ -112,7 +125,6 @@ def getAppUpdate(display):
     return change
     
 
-    
 #Returns the app reviews    
 def getAppReviews(display):
     global package
@@ -237,6 +249,5 @@ if __name__ == '__main__':
         print >> sys.stderr, 'SYNTAX: reviews.py [app-package-name]'
         sys.exit(-1)
 
-    getAppReviews(1)
-    getAppDetails(1)
-    #getAppUpdate(args[0],1)
+    searchApp(args[0])
+    
