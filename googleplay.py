@@ -124,7 +124,20 @@ def getAppUpdate(display):
         
     return change
     
-
+#Returns the app badge
+def getAppBadge(display):
+    global package
+    soup = createSoup()
+    
+    has_badge = soup.find( 'span', {'class' : 'badge-title'} )
+    if has_badge: 
+        badge = has_badge.get_text().strip()
+        
+    if display:
+        print badge
+        
+    return badge
+        
 #Returns the app reviews    
 def getAppReviews(display):
     global package
@@ -182,66 +195,6 @@ def getAppReviews(display):
     return reviews
 
 
-def getAppDetails(display):
-    global package
-    comment = []
-    i = -1
-    cur = 0
-    while True:
-        i += 1
-        url = "https://play.google.com/store/getreviews"
-        data = "reviewType=0&pageNum=" + str(i) + "&id=" + package + "&reviewSortOrder=4&xhr=1"
-        headers = { "orgin" : "https://play.google.com",
-                    "accept-language": "en-US,en;q=0.8",
-                    "user-agent": "Mozilla/5.0 (X1; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.94 Safari/537.36",
-                    "content-type": "application/x-www-form-urlencoded;charset=UTF-8",
-                    "accept": "*/*",
-                    "referer": "https://play.google.com/store/apps/details?id="+package}
-        req = urllib2.Request(url, data, headers)
-        response = urllib2.urlopen(req)
-        the_page = response.read()[6:]
-        js = json.loads(the_page)
-        
-        try:
-            page = js[0][2]
-            if not page:
-                raise IndexError
-            soup = BeautifulSoup( page )
-        except IndexError:
-            break
-
-        if not soup: return None
-        reviews_div = soup.find_all( 'div', {'class':'single-review'} )
-        for review in reviews_div[:10]:
-            reviews = []
-            cur += 1
-            if display:
-             print str(cur)+')', review.find(class_='author-name').get_text().strip(), review.find(class_='tiny-star').get('aria-label').strip(), 'On', review.find(class_='review-date').get_text().strip()
-            date = review.find(class_='review-date').get_text().strip()
-            rating = review.find(class_='tiny-star').get('aria-label').strip()
-            reviews.append(date)
-            reviews.append(rating)
-            body = review.find(class_='review-body')
-            title = body.find(class_='review-title')
-            link = body.find(class_='review-link')
-            text = title.get_text().strip()
-            if display:
-                print 'TITLE:', text and text or '(no title)'
-            title.decompose()
-            link.decompose()
-            text = body.get_text().strip()
-            reviews.append(text)
-            
-            
-            comment.append(reviews)
-            if display:
-                print 'REVIEW:', text and text or '(no content)'
-                print
-        if cur % 20 != 0:
-            break
-
-    print 'TOTAL REVIEWS:', cur
-    return comment
 
 if __name__ == '__main__':
     args = sys.argv[1:]
