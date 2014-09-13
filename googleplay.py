@@ -264,6 +264,27 @@ def getAppMaturity(display):
         
     return content
     
+#Returns the developer links
+def getAppDevLinks(display):
+    global package
+    soup = createSoup()
+    
+    links = []
+    
+    for dev_link in soup.find_all( 'a', {'class' : 'dev-link'} ):
+        if dev_link.get_text().strip() == "Email Developer":
+            email = dev_link.get( 'href' ).strip()[7:]
+            links.append(email)
+        elif dev_link.get_text().strip() == "Visit Developer's Website":
+            dev_website = dev_link.get( 'href' ).strip()
+            links.append(dev_website)
+            
+    if display:
+        for link in links:
+            print link
+        
+    return links
+    
 if __name__ == '__main__':
     args = sys.argv[1:]
     if not args:
@@ -271,4 +292,4 @@ if __name__ == '__main__':
         sys.exit(-1)
 
     searchApp(args[0])
-    getAppMaturity(1)
+    getAppDevLinks(1)
