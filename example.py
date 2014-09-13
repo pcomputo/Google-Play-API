@@ -13,18 +13,18 @@ if __name__ == '__main__':
     googleplay.searchApp(args[0])
     
     #get the Title of the app
-    googleplay.getAppTitle(1)
+    googleplay.getAppTitle(True)
     
     #get the lastest update date
-    googleplay.getAppDeveloper(1)
+    googleplay.getAppDeveloper(True)
     
     #get the dev link
-    googleplay.getAppDevLink(1)
+    googleplay.getAppDevLink(True)
     
     #get the lastest update date
-    googleplay.getAppUpdateDate(1)
+    googleplay.getAppUpdateDate(True)
     
     #get the app rating
-    googleplay.getAppRating(1)
+    googleplay.getAppRating(True)
     
     
