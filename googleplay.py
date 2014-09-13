@@ -223,6 +223,20 @@ def getAppSize(display):
         print size
         
     return size
+    
+#Returns the number of installs
+def getAppInstalls(display):
+    global package
+    soup = createSoup()
+    
+    num_downloads = soup.find( 'div', {'itemprop' : 'numDownloads'} )
+    if num_downloads: 
+        numDownloads = num_downloads.get_text().strip()
+        
+    if display:
+        print numDownloads
+        
+    return numDownloads
 
 
 if __name__ == '__main__':
@@ -232,4 +246,4 @@ if __name__ == '__main__':
         sys.exit(-1)
 
     searchApp(args[0])
-    getAppSize(1)
+    getAppInstalls(1)
