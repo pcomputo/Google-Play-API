@@ -238,6 +238,7 @@ def getAppInstalls(display):
         
     return numDownloads
 
+#Returns the App OS
 def getAppOS(display):
     global package
     soup = createSoup()
@@ -250,6 +251,19 @@ def getAppOS(display):
         
     return os
 
+#Returns the maturity content of the app
+def getAppMaturity(display):
+    global package
+    soup = createSoup()
+    
+    content_rating = soup.find( 'div', {'itemprop' : 'contentRating'} )
+    content = content_rating.get_text().strip()
+    
+    if display:
+        print content
+        
+    return content
+    
 if __name__ == '__main__':
     args = sys.argv[1:]
     if not args:
@@ -257,4 +271,4 @@ if __name__ == '__main__':
         sys.exit(-1)
 
     searchApp(args[0])
-    getAppOS(1)
+    getAppMaturity(1)
