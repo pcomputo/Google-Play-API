@@ -16,4 +16,10 @@ if __name__ == '__main__':
     googleplay.getAppTitle(1)
     
     #get the lastest update date
+    googleplay.getAppDeveloper(1)
+    
+    #get the dev link
+    googleplay.getAppDevLink(1)
+    
+    #get the lastest update date
     googleplay.getAppUpdateDate(1)

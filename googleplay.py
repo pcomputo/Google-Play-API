@@ -39,7 +39,35 @@ def getAppTitle(display):
         print title
         
     return title
- 
+    
+#Returns the developer name 
+def getAppDeveloper(display):
+    global package
+    soup = createSoup()
+    
+    subtitle = soup.find( 'a', {'class' : 'document-subtitle primary'} )
+    developer = subtitle.get_text().strip()
+    dev_link = subtitle.get('href').strip()
+    
+    if display:
+        print developer
+        
+    return developer
+    
+#Returns the dev link
+def getAppDevLink(display):
+    global package
+    soup = createSoup()
+    
+    subtitle = soup.find( 'a', {'class' : 'document-subtitle primary'} )
+    developer = subtitle.get_text().strip()
+    dev_link = subtitle.get('href').strip()
+    
+    if display:
+        print dev_link
+        
+    return dev_link
+    
 #Returns the App updated date    
 def getAppUpdateDate(display):
     global package
@@ -70,6 +98,8 @@ def getAppUpdate(display):
         
     return change
     
+
+    
 #Returns the app reviews    
 def getAppReviews(display):
     global package
@@ -90,8 +120,9 @@ def getAppReviews(display):
         response = urllib2.urlopen(req)
         the_page = response.read()[6:]
         js = json.loads(the_page)
-        page = js[0][2]
+        
         try:
+            page = js[0][2]
             if not page:
                 raise IndexError
             soup = BeautifulSoup( page )
@@ -100,7 +131,7 @@ def getAppReviews(display):
 
         if not soup: return None
         reviews_div = soup.find_all( 'div', {'class':'single-review'} )
-        for review in reviews_div[:10]:
+        for review in reviews_div:
             cur += 1
             if display:
              print str(cur)+')', review.find(class_='author-name').get_text().strip(), review.find(class_='tiny-star').get('aria-label').strip(), 'On', review.find(class_='review-date').get_text().strip()
@@ -145,8 +176,9 @@ def getAppDetails(display):
         response = urllib2.urlopen(req)
         the_page = response.read()[6:]
         js = json.loads(the_page)
-        page = js[0][2]
+        
         try:
+            page = js[0][2]
             if not page:
                 raise IndexError
             soup = BeautifulSoup( page )
@@ -192,5 +224,6 @@ if __name__ == '__main__':
         print >> sys.stderr, 'SYNTAX: reviews.py [app-package-name]'
         sys.exit(-1)
 
-    #getAppDetails(args[0],1)
+    getAppReviews(1)
+    getAppDetails(1)
     #getAppUpdate(args[0],1)
