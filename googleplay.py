@@ -238,6 +238,17 @@ def getAppInstalls(display):
         
     return numDownloads
 
+def getAppOS(display):
+    global package
+    soup = createSoup()
+    
+    operating_systems = soup.find( 'div', {'itemprop' : 'operatingSystems'} )
+    os = operating_systems.get_text().strip()
+    
+    if display:
+        print os
+        
+    return os
 
 if __name__ == '__main__':
     args = sys.argv[1:]
@@ -246,4 +257,4 @@ if __name__ == '__main__':
         sys.exit(-1)
 
     searchApp(args[0])
-    getAppInstalls(1)
+    getAppOS(1)
