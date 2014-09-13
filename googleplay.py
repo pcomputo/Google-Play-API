@@ -107,23 +107,6 @@ def getAppReviewersCount(display):
     
     return reviewers
     
-#Returns the What's new   
-def getAppUpdate(display):
-    global package
-    soup = createSoup()
-    
-    change = []
-    changes_div = soup.find_all( 'div', {'class':'recent-change'}  )
-    for changes in changes_div:
-        change.append(changes.get_text().strip())
-        #print change
-        
-    if display:
-        for log in change:
-            print log
-        
-    return change
-    
 #Returns the app badge
 def getAppBadge(display):
     global package
@@ -137,6 +120,38 @@ def getAppBadge(display):
         print badge
         
     return badge
+    
+#Returns the description of the app
+def getAppDesc(display):
+    global package
+    soup = createSoup()
+    
+    desc = []
+    description_div = soup.find_all( 'div', {'class':'id-app-orig-desc'}  )
+    for descs in description_div:
+        desc.append(descs.get_text().strip())
+        
+    if display:
+        for log in desc:
+            print log
+        
+    return desc
+    
+#Returns the What's new   
+def getAppUpdate(display):
+    global package
+    soup = createSoup()
+    
+    change = []
+    changes_div = soup.find_all( 'div', {'class':'recent-change'}  )
+    for changes in changes_div:
+        change.append(changes.get_text().strip())
+        
+    if display:
+        for log in change:
+            print log
+        
+    return change
         
 #Returns the app reviews    
 def getAppReviews(display):
@@ -203,4 +218,4 @@ if __name__ == '__main__':
         sys.exit(-1)
 
     searchApp(args[0])
-    
+    getAppDesc(1)
