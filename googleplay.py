@@ -284,12 +284,29 @@ def getAppDevLinks(display):
             print link
         
     return links
+
+def getAppPermissions(display):
+    global package
+    soup = createSoup()
     
+    permission = []
+    perms = soup.find_all( 'div', {'class':'permissions-heading'}  )
+    print perms
+    for perm in perms:
+        permission.append(perm.get_text().strip())
+        print "hie"
+        
+    if display:
+        for log in permission:
+            print log
+        
+    return permission 
+      
 if __name__ == '__main__':
     args = sys.argv[1:]
     if not args:
-        print >> sys.stderr, 'SYNTAX: reviews.py [app-package-name]'
+        print >> sys.stderr, 'SYNTAX: googleplay.py [app-package-name]'
         sys.exit(-1)
 
     searchApp(args[0])
-    getAppDevLinks(1)
+    getAppReviews(1)
