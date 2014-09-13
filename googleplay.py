@@ -136,23 +136,7 @@ def getAppDesc(display):
             print log
         
     return desc
-    
-#Returns the What's new   
-def getAppUpdate(display):
-    global package
-    soup = createSoup()
-    
-    change = []
-    changes_div = soup.find_all( 'div', {'class':'recent-change'}  )
-    for changes in changes_div:
-        change.append(changes.get_text().strip())
-        
-    if display:
-        for log in change:
-            print log
-        
-    return change
-        
+
 #Returns the app reviews    
 def getAppReviews(display):
     global package
@@ -208,7 +192,37 @@ def getAppReviews(display):
 
     print 'TOTAL REVIEWS:', cur
     return reviews
+    
+#Returns the What's new   
+def getAppUpdate(display):
+    global package
+    soup = createSoup()
+    
+    change = []
+    changes_div = soup.find_all( 'div', {'class':'recent-change'}  )
+    for changes in changes_div:
+        change.append(changes.get_text().strip())
+        
+    if display:
+        for log in change:
+            print log
+        
+    return change
+        
+#ADDITIONAL INFORMATION
 
+#Returns the size
+def getAppSize(display):
+    global package
+    soup = createSoup()
+    
+    app_size = soup.find( 'div', {'itemprop' : 'fileSize'} )
+    size = app_size.get_text().strip()
+    
+    if display:
+        print size
+        
+    return size
 
 
 if __name__ == '__main__':
@@ -218,4 +232,4 @@ if __name__ == '__main__':
         sys.exit(-1)
 
     searchApp(args[0])
-    getAppDesc(1)
+    getAppSize(1)
