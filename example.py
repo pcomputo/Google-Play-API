@@ -23,3 +23,8 @@ if __name__ == '__main__':
     
     #get the lastest update date
     googleplay.getAppUpdateDate(1)
+    
+    #get the app rating
+    googleplay.getAppRating(1)
+    
+    

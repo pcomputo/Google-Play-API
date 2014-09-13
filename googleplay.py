@@ -73,13 +73,26 @@ def getAppUpdateDate(display):
     global package
     soup = createSoup()
 
-    date_published_div = soup.find( 'div', {'itemprop' : 'datePublished'} )
-    updated = date_published_div.get_text().strip()
+    date_published = soup.find( 'div', {'itemprop' : 'datePublished'} )
+    updated = date_published.get_text().strip()
     
     if display:
         print updated
     
     return updated
+    
+#Returns the rating
+def getAppRating(display):
+    global package
+    soup = createSoup()
+    
+    rating_value = soup.find( 'meta', {'itemprop' : 'ratingValue'} )
+    rating = rating_value.get( 'content' ).strip()
+    
+    if display:
+        print rating
+    
+    return rating
     
 #Returns the What's new   
 def getAppUpdate(display):
