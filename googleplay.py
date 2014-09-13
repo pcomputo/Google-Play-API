@@ -81,6 +81,19 @@ def getAppUpdateDate(display):
     
     return updated
     
+#Returns the category
+def getAppCategory(display):
+    global package
+    soup = createSoup()
+    
+    category_get = soup.find( 'span', {'itemprop' : 'genre'} )
+    category = category_get.get_text()
+    
+    if display:
+        print category
+    
+    return category
+    
 #Returns the rating
 def getAppRating(display):
     global package
@@ -309,4 +322,4 @@ if __name__ == '__main__':
         sys.exit(-1)
 
     searchApp(args[0])
-    getAppReviews(1)
+    getAppCategory(1)
