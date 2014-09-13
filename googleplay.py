@@ -27,7 +27,8 @@ def createSoup():
     soup = BeautifulSoup( the_page )   
     
     return soup
-
+    
+#Returns the App title
 def getAppTitle(display):
     soup = createSoup()
     
@@ -38,7 +39,8 @@ def getAppTitle(display):
         print title
         
     return title
-     
+ 
+#Returns the App updated date    
 def getAppUpdateDate(display):
     global package
     soup = createSoup()
@@ -51,7 +53,7 @@ def getAppUpdateDate(display):
     
     return updated
     
-    
+#Returns the What's new   
 def getAppUpdate(display):
     global package
     soup = createSoup()
@@ -68,7 +70,7 @@ def getAppUpdate(display):
         
     return change
     
-    
+#Returns the app reviews    
 def getAppReviews(display):
     global package
     reviews = []
@@ -191,4 +193,4 @@ if __name__ == '__main__':
         sys.exit(-1)
 
     #getAppDetails(args[0],1)
-    getAppUpdate(args[0],1)
+    #getAppUpdate(args[0],1)
